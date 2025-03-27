@@ -1,0 +1,91 @@
+/* Overall layout */
+.messages-container {
+    display: flex;
+    height: 100vh;
+    /* Full height */
+}
+
+/* Left side (contacts) */
+.contacts {
+    flex: 1;
+    /* Takes up half of the container */
+    background-color: #f5f5f5;
+    padding: 20px;
+    overflow-y: auto;
+    /* Allow scrolling if list is long */
+    border-right: 1px solid #ddd;
+}
+
+/* Contact list */
+.contacts ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contacts li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.contacts li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Right side (messages) */
+.message-section {
+    flex: 2;
+    /* Takes up 2/3 of the container */
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Chat messages display area */
+.messages {
+    flex: 1;
+    /* Takes up remaining space */
+    overflow-y: auto;
+    /* Allow scrolling if messages exceed the view */
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Individual message */
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    max-width: 80%;
+}
+
+.message-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-input input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.message-input button {
+    width: 15%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.message-input button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,52 @@
+/* Card styling */
+.card {
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 10px;
+    width: 720px;
+    height: 600px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+}
+
+/* Container center */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Input fields */
+.card input {
+    width: 100%;
+    padding: 15px;
+    /* Increased padding to match button */
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+}
+
+/* Login button */
+.card button {
+    width: 100%;
+    padding: 15px;
+    /* Increased padding to match input fields */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+}
+
+.card button:hover {
+    background-color: #0056b3;
+}
