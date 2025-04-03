@@ -6,9 +6,12 @@ import { connectToDatabase } from "./mongodb.js";
 import User from "./Models/User.js";
 import cors from "cors";
 
+
 dotenv.config();
 
 const app = express();
+
+app.use(express.json());
 
 app.use(cors({
     origin: "http://localhost:3000",
@@ -138,4 +141,49 @@ app.get("/searchUsers", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to search for users", message: error.message });
   }
+});
+
+
+
+
+
+app.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body; // using username for login
+
+    // Find user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      console.log("User not found");
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Compare the provided password with the stored hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      console.log("Passwords do not match");
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Set session information (ensure you have express-session middleware configured)
+    req.session.userId = user._id;
+
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        verified: user.verified,
+        roles: user.roles,
+      },
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/test123", (req, res) => {
+  res.send("Hello World");
 });
