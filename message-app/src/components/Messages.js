@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Messages.css";
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 
 function Messages() {
   const [showPopup, setShowPopup] = useState(false);
@@ -24,7 +26,7 @@ function Messages() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (searchQuery.trim() !== "") {
-        fetch(`http://localhost:5000/searchUsers?query=${encodeURIComponent(searchQuery)}`)
+        fetch(`${baseURL}/searchUsers?query=${encodeURIComponent(searchQuery)}`)
           .then(response => response.json())
           .then(data => {
             setSearchResults(data);

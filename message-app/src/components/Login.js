@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css"; // Import the CSS file with your styling
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ function Login() {
     setError(""); // Clear previous errors
 
     try {
-      const response = await axios.post("/login", { username, password });
+      const response = await axios.post(`${baseURL}/login`, { email, password });
       // Assuming the login is successful and session cookies are handled automatically
       navigate("/Messages");
     } catch (err) {
@@ -32,10 +34,10 @@ function Login() {
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit}>
           <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input

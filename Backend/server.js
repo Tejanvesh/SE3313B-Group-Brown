@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { connectToDatabase } from "./mongodb.js";
 import User from "./Models/User.js";
 import cors from "cors";
-
+import session from "express-session";
 
 dotenv.config();
 
@@ -16,6 +16,12 @@ app.use(express.json());
 app.use(cors({
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"]
+}));
+
+app.use(session({
+  secret: "yourSecretKey",
+  resave: false,
+  saveUninitialized: false
 }));
 
 const port = process.env.PORT || 5000;
@@ -144,15 +150,12 @@ app.get("/searchUsers", async (req, res) => {
 });
 
 
-
-
-
 app.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body; // using username for login
+    const { email, password } = req.body;
 
-    // Find user by username
-    const user = await User.findOne({ username });
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
       console.log("User not found");
       return res.status(400).json({ message: "Invalid credentials" });
@@ -166,16 +169,15 @@ app.post("/login", async (req, res) => {
     }
 
     // Set session information (ensure you have express-session middleware configured)
-    req.session.userId = user._id;
+    req.session.username = user._id;
 
     res.status(200).json({
       message: "Login successful",
       user: {
-        _id: user._id,
         username: user.username,
         email: user.email,
-        verified: user.verified,
-        roles: user.roles,
+        friends: user.friends,
+        requests: user.requests,
       },
     });
   } catch (error) {
