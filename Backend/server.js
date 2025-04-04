@@ -133,21 +133,67 @@ app.post("/acceptFriendRequest", async (req, res) => {
   }
 });
 
-// Route to search for users by username
-app.get("/searchUsers", async (req, res) => {
-  const { query } = req.query;
+// Route to reject a friend request
+app.post("/rejectFriendRequest", async (req, res) => {
+  const { username, fromUsername } = req.body;
 
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (!user.requests.includes(fromUsername)) {
+      return res.status(400).json({ error: "No pending friend request from this user" });
+    }
+
+    // Remove the friend request
+    user.requests = user.requests.filter(request => request !== fromUsername);
+    await user.save();
+
+    res.status(200).json({ message: "Friend request rejected successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to reject friend request", message: error.message });
+  }
+});
+
+// Route to get all friends of a user
+app.get("/getFriendRequests/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ requests: user.requests });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch friend requests", message: error.message });
+  }
+});
+
+// Route to search for users by username while excluding the current user
+app.get("/searchUsers", async (req, res) => {
+  const { query, currentUsername } = req.query;
   try {
     if (!query) {
       return res.status(400).json({ error: "Query parameter is required" });
     }
-
-    const users = await User.find({ username: { $regex: query, $options: "i" } });
+    const users = await User.find({
+      $and: [
+        { username: { $regex: query, $options: "i" } },
+        { username: { $ne: currentUsername } }
+      ]
+    });
     res.status(200).json(users.map(user => user.username));
   } catch (error) {
     res.status(500).json({ error: "Failed to search for users", message: error.message });
   }
 });
+
 
 
 app.post("/login", async (req, res) => {
@@ -186,6 +232,46 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/test123", (req, res) => {
-  res.send("Hello World");
+// Route to remove a friend from a user's friend list
+app.post("/removeFriend", async (req, res) => {
+  const { username, friendUsername } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+    const friendUser = await User.findOne({ username: friendUsername });
+
+    if (!user || !friendUser) {
+      return res.status(404).json({ error: "One or both users not found" });
+    }
+
+    if (!user.friends.includes(friendUsername)) {
+      return res.status(400).json({ error: "Users are not friends" });
+    }
+
+    // Remove friendUsername from user's friends list
+    user.friends = user.friends.filter(friend => friend !== friendUsername);
+    // Remove username from friendUser's friends list
+    friendUser.friends = friendUser.friends.filter(friend => friend !== username);
+
+    await user.save();
+    await friendUser.save();
+
+    res.status(200).json({ message: "Friend removed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to remove friend", message: error.message });
+  }
+});
+
+// Route to get the friends of a user
+app.get("/getFriends/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ friends: user.friends });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch friends", message: error.message });
+  }
 });

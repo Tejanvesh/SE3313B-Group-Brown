@@ -17,7 +17,7 @@ function Login() {
 
     try {
       const response = await axios.post(`${baseURL}/login`, { email, password });
-      // Assuming the login is successful and session cookies are handled automatically
+      localStorage.setItem("username", response.data.user.username); // Store the username in local storage
       navigate("/Messages");
     } catch (err) {
       // Display the error message from the server or a default error message
