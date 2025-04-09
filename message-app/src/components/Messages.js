@@ -101,7 +101,6 @@ function Messages() {
       handleSendMessage();
       //setNewMessage("");
 
-
       isConnected = false;
     } else {
       isConnected = true;
