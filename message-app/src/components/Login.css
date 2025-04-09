@@ -1,52 +1,148 @@
-/* Card styling */
-.card {
-    font-family: Arial, sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    border-radius: 10px;
-    width: 720px;
-    height: 600px;
-    padding: 20px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f8ff;
+  }
+  
+  /* Card styling */
+  .card {
+    background-color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    padding: 30px;
     text-align: center;
-    margin: 20px;
-}
-
-/* Container center */
-.container {
+    margin: 0 auto;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Container center */
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
-
-/* Input fields */
-.card input {
+    background: linear-gradient(135deg, #e6f7ff 0%, #c2e9fb 100%);
+  }
+  
+  /* Headings */
+  .card h3 {
+    color: #1e3a8a;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
+  
+  /* Input fields */
+  .card input {
     width: 100%;
     padding: 15px;
-    /* Increased padding to match button */
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin: 12px 0;
+    border: 1px solid #d0e1f9;
+    border-radius: 8px;
     font-size: 16px;
-    box-sizing: border-box;
-    /* Include padding in width calculation */
-}
-
-/* Login button */
-.card button {
+    transition: all 0.3s ease;
+    background-color: #f9fbff;
+  }
+  
+  .card input:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    background-color: #fff;
+  }
+  
+  .card input::placeholder {
+    color: #8ab4f8;
+  }
+  
+  /* Login/Register button */
+  .card button {
     width: 100%;
     padding: 15px;
-    /* Increased padding to match input fields */
-    background-color: #007bff;
+    background-color: #1a73e8;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
-    box-sizing: border-box;
-    /* Include padding in width calculation */
-}
-
-.card button:hover {
-    background-color: #0056b3;
-}
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(26, 115, 232, 0.25);
+  }
+  
+  .card button:hover {
+    background-color: #0d66da;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(26, 115, 232, 0.35);
+  }
+  
+  .card button:active {
+    transform: translateY(0);
+    background-color: #0b57d0;
+  }
+  
+  .card p {
+    margin-top: 25px;
+    color: #5f6368;
+    font-size: 16px;
+  }
+  
+  .card a {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .card a:hover {
+    color: #0b57d0;
+    text-decoration: underline;
+  }
+  
+  .error {
+    color: #d93025;
+    background-color: rgba(217, 48, 37, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border-left: 4px solid #d93025;
+    text-align: left;
+  }
+  
+  .brand {
+    margin-bottom: 30px;
+  }
+  
+  .brand-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a73e8;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .card {
+      width: 95%;
+      padding: 20px;
+    }
+    
+    .card h3 {
+      font-size: 24px;
+    }
+  }
