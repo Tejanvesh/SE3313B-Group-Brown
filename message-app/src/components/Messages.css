@@ -2,114 +2,206 @@
 .messages-container {
     display: flex;
     height: 100vh;
-    /* Full height */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Left side (contacts) */
 .contacts {
     flex: 1;
-    /* Takes up half of the container */
     background-color: #f5f5f5;
     padding: 20px;
     overflow-y: auto;
-    /* Allow scrolling if list is long */
     border-right: 1px solid #ddd;
+    max-width: 350px;
 }
 
 .contacts-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.contacts-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
 }
 
 .add-contact {
     background-color: #007bff;
     color: white;
-    font-size: 40px;
-    font-weight: regular;
-    padding: 0px 13px;
+    font-size: 24px;
+    font-weight: normal;
+    height: 38px;
+    width: 38px;
+    padding: 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .add-contact:hover {
     background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Contact list */
 .contacts ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 .contacts li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.2s ease;
 }
 
 .contacts li:hover {
-    background-color: #f1f1f1;
+    background-color: #f8f9fa;
+}
+
+.contacts li:last-child {
+    border-bottom: none;
+}
+
+.chat-preview {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-preview h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.chat-preview p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Right side (messages) */
 .message-section {
     flex: 2;
-    /* Takes up 2/3 of the container */
-    background-color: #fff;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    border-radius: 0;
+}
+
+.message-section h2 {
+    margin: 0;
     padding: 20px;
+    font-size: 22px;
+    color: #333;
+    border-bottom: 1px solid #eee;
 }
 
 /* Chat messages display area */
 .messages {
     flex: 1;
-    /* Takes up remaining space */
     overflow-y: auto;
-    /* Allow scrolling if messages exceed the view */
-    margin-bottom: 20px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
 }
 
 /* Individual message */
 .message {
-    padding: 10px;
+    padding: 12px 16px;
     margin: 5px 0;
-    border-radius: 5px;
+    border-radius: 12px;
+    position: relative;
+    max-width: 70%;
+    word-wrap: break-word;
+    line-height: 1.4;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* User messages (right side) */
+.message.user-message {
+    background-color: #e3f2fd;
+    align-self: flex-end;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+/* Recipient messages (left side) */
+.message.recipient-message {
     background-color: #f1f1f1;
-    max-width: 80%;
+    align-self: flex-start;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+/* Message sender style */
+.message span {
+    font-weight: 600;
+    color: #007bff;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .message-input {
     display: flex;
-    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    align-items: center;
 }
 
 .message-input input {
-    width: 80%;
-    padding: 10px;
-    border-radius: 5px;
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
     border: 1px solid #ddd;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.2s;
+}
+
+.message-input input:focus {
+    border-color: #007bff;
 }
 
 .message-input button {
-    width: 15%;
-    padding: 10px;
+    padding: 12px 18px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-
+    margin-left: 10px;
+    font-weight: 500;
+    transition: all 0.2s;
 }
 
 .message-input button:hover {
     background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
+/* Popup styling */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -124,16 +216,16 @@
 }
 
 .popup-content {
-    padding: 10px;
+    padding: 25px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 12px;
     position: relative;
-    width: 40%;
-    max-width: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.popup-header{
+.popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -142,169 +234,246 @@
 
 .popup-header h3 {
     margin: 0;
-    font-size: 25px;
+    font-size: 20px;
+    color: #333;
 }
-.search-input-div{
+
+.search-input-div {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 5px;
 }
 
 .search-input {
     width: 100%;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px 16px;
+    border-radius: 8px;
     border: 1px solid #007bff;
-    margin-bottom: 10px;
+    outline: none;
+    font-size: 15px;
+    transition: box-shadow 0.2s;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .close-popup {
-    padding-top: 2px;
     background-color: #007bff;
-    border-radius: 5px;
-    font-weight: bold;
     color: white;
     border: none;
-    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
 .close-popup:hover {
     background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
 .search-results {
     list-style: none;
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 0;
-    max-height: 150px;
+    max-height: 250px;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #eee;
+    border-radius: 8px;
 }
 
 .search-results li {
-    padding: 8px 10px;
+    padding: 12px 16px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
-    justify-content: space-between;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.add-friend-button{
+.add-friend-button {
     background-color: #007bff;
     color: white;
     font-size: 14px;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: all 0.2s;
 }
+
 .add-friend-button:hover {
     background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
-.sent-friend-button{
-    background-color: orange;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.accept-friend-button{
-    background-color: #0ACC00;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.accept-friend-button:hover {
-    background-color: #09B800;
-}
-
-.reject-friend-button{
-    margin-left: 10px;
-    background-color:#FF3333;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.reject-friend-button:hover {
-    background-color: #FF5C5C;
-}
 .search-results li:last-child {
     border-bottom: none;
 }
 
 .search-results li:hover {
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
 }
 
-/* Friend Requests Section */
-.friend-requests-section {
-    margin-top: 10px;
-  }
-  
-  /* Friend Requests List */
-  .friend-requests-list {
-    list-style: none;
+.profile-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h3 {
     margin: 0;
-    padding: 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  /* Individual Friend Request Item */
-  .friend-request-item {
-    padding: 8px 10px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-  
-  .friend-request-item:last-child {
-    border-bottom: none;
-  }
-  
-  .friend-request-item:hover {
-    background-color: #f5f5f5;
-  }
-  
-  /* Buttons for Accepting and Rejecting Requests */
-  .friend-request-buttons button {
+    font-size: 1.2em;
+}
+
+.friend-requests {
+    margin-top: 10px;
+}
+
+.friend-requests ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.friend-requests li {
+    margin: 5px 0;
+}
+
+button {
     background-color: #007bff;
     color: white;
-    font-size: 14px;
-    padding: 5px 10px;
     border: none;
-    border-radius: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    margin-left: 5px;
-  }
-  
-  .friend-request-buttons button:hover {
-    background-color: #0056b3;
-  }
+}
 
-  .remove-friend-button{
+button:hover {
+    background-color: #0056b3;
+}
+
+
+.profile-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.profile-section h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.friend-requests {
+    margin-top: 10px;
+}
+
+.friend-requests ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.friend-requests li {
+    margin: 5px 0;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+.connect-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.connect-button:hover {
+    background-color: #0056b3;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Style for the Connect button (Green with Checkmark) */
+.connect-button {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.connect-button:hover {
+    background-color: darkgreen;
+}
+
+/* Style for the Reject button (Red with Cross) */
+.reject-button {
     background-color: red;
     color: white;
-    font-size: 14px;
-    padding: 5px 10px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-  }
-  
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.reject-button:hover {
+    background-color: darkred;
+}
+
+/* Add checkmark and cross icons styles */
+.check-icon {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.cross-icon {
+    font-size: 18px;
+    margin-right: 5px;
+}
