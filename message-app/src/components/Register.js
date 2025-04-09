@@ -1,29 +1,41 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-const baseURL = process.env.REACT_APP_API_BASE_URL;
-
 
 function Register() {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    // State to hold form data
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!username || !password || !email) {
+            setError("All fields are required");
+            return;
+        }
+
         try {
-            const response = await fetch(`${baseURL}/addUser`, {
+            const response = await fetch("http://localhost:5000/addUser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password }),
             });
+
+            const data = await response.json();
+
             if (response.ok) {
                 navigate("/");
             } else {
-                console.log("Error creating user");
+                setError(data.error || "Failed to register");
             }
         } catch (error) {
-            console.error(error);
+            console.error("Error during registration:", error);
+            setError("Failed to register. Please try again later.");
         }
     };
 
@@ -31,6 +43,7 @@ function Register() {
         <div className="container">
             <div className="card">
                 <h3><b>Register</b></h3>
+                {error && <div className="error">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"

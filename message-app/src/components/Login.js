@@ -1,51 +1,68 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./Login.css"; // Import the CSS file with your styling
-const baseURL = process.env.REACT_APP_API_BASE_URL;
-
+import "./Login.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+
+    if (!username || !password) {
+      setError("Username and password are required.");
+      return;
+    }
 
     try {
-      const response = await axios.post(`${baseURL}/login`, { email, password });
-      localStorage.setItem("username", response.data.user.username); // Store the username in local storage
-      navigate("/Messages");
-    } catch (err) {
-      // Display the error message from the server or a default error message
-      setError(err.response?.data?.message || "An error occurred during login.");
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCurrentUser(data.user);
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
+
+        console.log("User logged in:", data.user.username);
+
+        console.log("Login successful");
+        navigate("/messages");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("An error occurred while logging in. Please try again later.");
     }
   };
 
   return (
     <div className="container">
       <div className="card">
-        <h3>
-          <b>Login</b>
-        </h3>
-        {error && <p className="error">{error}</p>}
+        <h3><b>Login</b></h3>
+        {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
           <button type="submit">Login</button>
         </form>
